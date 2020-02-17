@@ -21,3 +21,17 @@ IPEDS <- IPEDS %>%
   rename(admissions_2017 = 'Admissions total (ADM2017)') %>%
   rename(SAT_math_2017 = 'SAT Math 75th percentile score (ADM2017)')
 
+IPEDS <- IPEDS %>%
+  mutate(admit_rate_2017 = admissions_2017/applicants_2017)
+
+colours()
+
+IPEDS %>%
+  ggplot(mapping = aes(x = SAT_math_2017, y = admit_rate_2017, color = "azure")) +
+  geom_point() +
+  scale_y_continuous(lim = c(0, 1), breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1))
+
+
+
+
+

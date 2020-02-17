@@ -29,15 +29,15 @@ plot(pressure)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
-```{r loadplots, message = FALSE}
+```{r loadplots, include = FALSE}
 library(tidyverse)
 ```
 
-```{r read_data}
+```{r read_data, include = FALSE}
 IPEDS <- read_csv("IPEDS_data.csv")
 ```
 
-```{r rename_variables, echo = FALSE}
+```{r rename_variables, include = FALSE}
 IPEDS <- IPEDS %>%
   rename(enrollment_2018 = 'Grand total (EFFY2018  Undergraduate)') %>%
   rename(enrollment_2017 = 'Grand total (EFFY2017  Undergraduate)') %>%
@@ -56,8 +56,18 @@ IPEDS <- IPEDS %>%
   rename(SAT_math_2017 = 'SAT Math 75th percentile score (ADM2017)')
 ```
 
+```{r admit_rate, include = FALSE}
+IPEDS <- IPEDS %>%
+  mutate(admit_rate_2017 = admissions_2017/applicants_2017)
+```
 
 
+```{r admit_plot}
+IPEDS %>%
+  ggplot(mapping = aes(x = SAT_math_2017, y = admit_rate_2017, color = "azure")) +
+  geom_point() +
+  scale_y_continuous(lim = c(0, 1), breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1))
+```
 
 
 
