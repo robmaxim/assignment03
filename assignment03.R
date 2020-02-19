@@ -27,7 +27,7 @@ IPEDS <- IPEDS %>%
 colours()
 
 IPEDS %>%
-  ggplot() + geom_point(mapping = aes(x = SAT_math_2017, y = admit_rate_2017), color = "royalblue") +
+  ggplot(mapping = aes(x = SAT_math_2017, y = admit_rate_2017)) + geom_point(color = "royalblue") +
   scale_y_continuous(lim = c(0, 1), breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1))
 
 year <- c(2009:2018)
@@ -45,6 +45,11 @@ enrollment <- c(sum(IPEDS$enrollment_2009, na.rm = TRUE),
 Annual_enrollment <- data.frame(year, enrollment)
 
 Annual_enrollment %>%
-  ggplot() + geom_line(mapping = aes(x = year, y = enrollment), color = "forestgreen")
+  ggplot(mapping = aes(x = year, y = enrollment)) + geom_line(color = "forestgreen")
 
+State_count <- IPEDS %>%
+  count(state_abbrev) %>%
+  arrange(desc(n))
 
+State_count %>%
+  ggplot(mapping = aes(x = reorder(state_abbrev, desc(n)), y = n)) + geom_col()
