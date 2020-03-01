@@ -53,3 +53,14 @@ State_count <- IPEDS %>%
 
 State_count %>%
   ggplot(mapping = aes(x = reorder(state_abbrev, desc(n)), y = n)) + geom_col()
+
+IPEDS %>%
+  add_column(y = 0) %>%
+  ggplot(mapping = aes(x = state_tuition_2017, y = y, size = enrollment_2018)) + 
+  geom_point(color = "maroon") + 
+  scale_size_continuous(range = c(0.001, 5)) +
+  scale_x_continuous(breaks = c(10000, 15000, 20000, 25000, 30000, 35000, 40000))
+
+
+
+
