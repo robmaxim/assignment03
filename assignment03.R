@@ -27,7 +27,7 @@ IPEDS <- IPEDS %>%
 colours()
 
 IPEDS %>%
-  ggplot(mapping = aes(x = SAT_math_2017, y = admit_rate_2017)) + geom_point(color = "royalblue") +
+  ggplot(mapping = aes(x = SAT_math_2017, y = admit_rate_2017)) + geom_point(color = "royal blue") +
   scale_y_continuous(lim = c(0, 1), breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1))
 
 year <- c(2009:2018)
@@ -54,10 +54,23 @@ State_count <- IPEDS %>%
 State_count %>%
   ggplot(mapping = aes(x = reorder(state_abbrev, desc(n)), y = n)) + geom_col()
 
+# Does the same thing as above set of code, but using geom_bar
+IPEDS %>%
+  ggplot(mapping = aes(x = reorder(state_abbrev, state_abbrev, function(x) -length(x)))) + 
+           geom_bar()
+
 IPEDS %>%
   add_column(y = 0) %>%
   ggplot(mapping = aes(x = state_tuition_2017, y = y, size = enrollment_2018)) + 
-  geom_point(color = "maroon") + 
+  geom_point(color = "maroon") + theme(legend.position = 'none') +
+  scale_size_continuous(range = c(0.001, 5)) +
+  scale_x_continuous(breaks = c(10000, 15000, 20000, 25000, 30000, 35000, 40000))
+
+
+IPEDS %>%
+  add_column(y = 0) %>%
+  ggplot(mapping = aes(x = state_tuition_2017, y = y, size = enrollment_2018)) + 
+  geom_point(color = "maroon") +
   scale_size_continuous(range = c(0.001, 5)) +
   scale_x_continuous(breaks = c(10000, 15000, 20000, 25000, 30000, 35000, 40000))
 
